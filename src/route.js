@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./paginas/Login/login";
 import Cadastro from "./paginas/Cadastro/cadastro"
+import Planos from "./paginas/Planos/planos";
 
 
 function Rotas() {
@@ -10,9 +11,9 @@ function Rotas() {
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<Cadastro />} />
-{/*             <Route path="/subscriptions" element={<Planos />} />
-            <Route path="/subscriptions/" element={<Planos />} />
-            <Route path="/home" element={<TelaInicial />} /> */}
+            <Route path="/subscriptions" element={<Planos />} />
+  {/*           <Route path="/subscriptions/" element={<Planos />} />
+            <Route path="/home" element={<TelaInicial />} />  */}
         </Routes>
 
     )
