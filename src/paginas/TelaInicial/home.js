@@ -1,4 +1,6 @@
+import { useContext } from "react"
 import styled from "styled-components"
+import { UserContext } from "../../app"
 
 const Page = styled.div`
     width: 375px;
@@ -38,9 +40,13 @@ const Button = styled.a`
 
 function TelaInicial(){
 
+    const {plano} = useContext(UserContext)
+
+    console.log(plano.perks[0])
+
     return(
         <Page>
-            <Button href="https://www.youtube.com/" target="_blank"><p>Teste</p></Button>
+            <Button href={plano.perks[0].link} target="_blank"><p>Teste</p></Button>
             <Button href="https://www.twitter.com/" target="_blank"><p>TESTES</p></Button>
 
         </Page>

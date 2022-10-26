@@ -204,34 +204,16 @@ function PlanoSelecionado() {
         )
     }
 
-    function CadastroCartao(){
+    function CadastroCartao() {
 
-        
 
-    }
-
-    function Cadastro(props){
-        props.preventDefault();
-        CadastroCartao();
-    }
-
-    function Cartao() {
-
-        return (
-
-            <Form onSubmit={Cadastro}>
-                <input onChange={((e) => setNomeCartao(e.target.value))} placeholder="Nome impresso no cartão"></input>
-                <input onChange={((e) => setNumeroCartao(e.target.value))} placeholder="Dígitos do cartão"></input>
-                <Validade>
-                    <input onChange={((e) => setCodigoCard(e.target.value))} placeholder="Código de Segurança" type="text" pattern="/^\d{3}$/"></input>
-                    <input onChange={((e) => setValidade(e.target.value))} placeholder="Validade"></input>
-                </Validade>
-                <Button type="submit"><p>ENTRAR</p></Button>
-            </Form>
-
-        )
 
     }
+
+    function Cadastro() {
+        navegar("/home")
+    }
+
 
 
     if (plano !== undefined) {
@@ -241,7 +223,15 @@ function PlanoSelecionado() {
 
             <Page>
                 <Cards />
-                <Cartao/>
+                <Form onSubmit={Cadastro}>
+                    <input onChange={((e) => setNomeCartao(e.target.value))} placeholder="Nome impresso no cartão"></input>
+                    <input onChange={((e) => setNumeroCartao(e.target.value))} placeholder="Dígitos do cartão"></input>
+                    <Validade>
+                        <input onChange={((e) => setCodigoCard(e.target.value))} placeholder="Código de Segurança" type="text" ></input>
+                        <input onChange={((e) => setValidade(e.target.value))} placeholder="Validade"></input>
+                    </Validade>
+                    <Button type="submit"><p>ENTRAR</p></Button>
+                </Form>
 
             </Page>
 
