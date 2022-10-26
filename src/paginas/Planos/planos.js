@@ -1,5 +1,8 @@
-import { useState } from "react"
+import axios from "axios"
+import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import { UserContext } from "../../app"
 import Group1 from "../../assets/img/group1.png"
 import Group2 from "../../assets/img/group2.png"
 import Group3 from "../../assets/img/group3.png"
@@ -52,26 +55,53 @@ const BoxPlanos = styled.div`
 
 `
 
-function Planos(){
+function Planos() {
 
-    
+    const [plans, setPlans] = useState([]);
+    const navegar = useNavigate();
+    const Api = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships"
+
+
+    const { token } = useContext(UserContext)
+
+    useEffect(() => {
+
+        const autorizacao = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const promessa = axios.get(Api, autorizacao)
+        promessa.then((props) => {
+            setPlans(props.data);
+        })
+
+
+
+        promessa.catch((e) => {
+            alert('Error: ' + e.response.data.message);
+            navegar("/");
+            window.location.reload();
+        });
+
+
+    }, [navegar, token])
+
+
+
 
     return (
 
         <Page>
             <Title>Escolha seu Plano</Title>
-            <BoxPlanos >
-                <img src={Group1} alt="Group1" />
-                <p>R$39,99</p>
-            </BoxPlanos >
-            <BoxPlanos >
-                <img src={Group2} alt="Group1" />
-                <p>R$69,99</p>
-            </BoxPlanos>
-            <BoxPlanos >
-                <img src={Group3} alt="Group1" />
-                <p>R$99,99</p>
-            </BoxPlanos>
+            {plans.map((props) => {
+                <BoxPlanos>
+                    <img src={props.image} alt="Group1" />
+                    <p>{props.price}</p>
+                </BoxPlanos >
+
+            })}
         </Page>
 
     )

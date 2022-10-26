@@ -6,10 +6,13 @@ import GlobalStyle from "./assets/styles/GlobalStyle";
 export const UserContext = createContext({});
 
 function App(){
+
+    const [token, setToken] = useState(null)
+
     return(
 
         <Router>
-            <UserContext.Provider value={{  }}>
+            <UserContext.Provider value={{ token, setToken }}>
 
 
                 <GlobalStyle />

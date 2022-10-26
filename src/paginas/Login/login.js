@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Logo from "../../assets/img/drivenlogo.png"
-import { useState  } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { UserContext } from "../../app";
 
 
 const Page = styled.form`
@@ -52,6 +53,7 @@ function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
+    const { setToken } = useContext(UserContext)
     const Api = "https://mock-api.driven.com.br/api/v4/driven-plus/auth/login"
     const navegar = useNavigate();
 
@@ -63,16 +65,17 @@ function Login() {
         }
 
         const promessa = axios.post(Api, user);
-        promessa.then(() =>
+        promessa.then((props) => {
+            setToken(props.data.token);
             navegar("/subscriptions")
-        )
+        })
         promessa.catch((props) => {
             alert(props.response.data.message);
         });
 
     }
 
-    function LogIn(props){
+    function LogIn(props) {
         props.preventDefault();
         CheckLogIn();
         console.log("oi")
