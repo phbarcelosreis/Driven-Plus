@@ -1,6 +1,6 @@
 import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import styled from "styled-components"
 import { UserContext } from "../../app"
 
@@ -83,7 +83,7 @@ function Planos() {
         });
 
 
-    },[])
+    }, [])
 
     if (plans !== undefined) {
         return (
@@ -91,10 +91,12 @@ function Planos() {
             <Page>
                 <Title>Escolha seu Plano</Title>
                 {plans.map((props) => (
-                    <BoxPlanos key={props.id} id={props.id}>
-                        <img src={props.image} alt="Group1" />
-                        <p>{"R$" + props.price}</p>
-                    </BoxPlanos >
+                    <Link to={`/subscription/${props.id}`}>
+                        <BoxPlanos key={props.id} id={props.id}>
+                            <img src={props.image} alt="Group1" />
+                            <p>{"R$" + props.price}</p>
+                        </BoxPlanos >
+                    </Link>
 
                 ))}
             </Page>

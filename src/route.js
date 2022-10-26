@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./paginas/Login/login";
 import Cadastro from "./paginas/Cadastro/cadastro"
 import Planos from "./paginas/Planos/planos";
+import PlanoSelecionado from "./paginas/Planos/selecionado";
 
 
 function Rotas() {
@@ -12,8 +13,8 @@ function Rotas() {
             <Route path="/" element={<Login />} />
             <Route path="/sign-up" element={<Cadastro />} />
             <Route path="/subscriptions" element={<Planos />} />
-  {/*           <Route path="/subscriptions/" element={<Planos />} />
-            <Route path="/home" element={<TelaInicial />} />  */}
+            <Route path="/subscription/:id" element={< PlanoSelecionado/>} />
+           {/*    <Route path="/home" element={<TelaInicial />} />  */}
         </Routes>
 
     )
