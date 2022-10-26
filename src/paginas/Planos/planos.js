@@ -1,11 +1,8 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { UserContext } from "../../app"
-import Group1 from "../../assets/img/group1.png"
-import Group2 from "../../assets/img/group2.png"
-import Group3 from "../../assets/img/group3.png"
 
 const Page = styled.div`
 width: 375px;
@@ -59,12 +56,13 @@ function Planos() {
 
     const [plans, setPlans] = useState([]);
     const navegar = useNavigate();
-    const Api = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships"
 
 
-    const { token } = useContext(UserContext)
+    const { token } = useContext(UserContext);
 
     useEffect(() => {
+
+        const Api = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships"
 
         const autorizacao = {
             headers: {
@@ -72,12 +70,11 @@ function Planos() {
             }
         }
 
-        const promessa = axios.get(Api, autorizacao)
+        const promessa = axios.get(Api, autorizacao);
         promessa.then((props) => {
             setPlans(props.data);
+
         })
-
-
 
         promessa.catch((e) => {
             alert('Error: ' + e.response.data.message);
@@ -86,23 +83,28 @@ function Planos() {
         });
 
 
-    }, [navegar, token])
+    },[])
 
+    if (plans !== undefined) {
+        return (
 
+            <Page>
+                <Title>Escolha seu Plano</Title>
+                {plans.map((props) => (
+                    <BoxPlanos key={props.id} id={props.id}>
+                        <img src={props.image} alt="Group1" />
+                        <p>{"R$" + props.price}</p>
+                    </BoxPlanos >
 
+                ))}
+            </Page>
 
+        )
+    }
     return (
 
-        <Page>
-            <Title>Escolha seu Plano</Title>
-            {plans.map((props) => {
-                <BoxPlanos>
-                    <img src={props.image} alt="Group1" />
-                    <p>{props.price}</p>
-                </BoxPlanos >
-
-            })}
-        </Page>
+        <>
+        </>
 
     )
 }
