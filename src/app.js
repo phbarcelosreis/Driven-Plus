@@ -7,12 +7,15 @@ export const UserContext = createContext({});
 
 function App(){
 
+    const [plano, setPlano] = useState([])
     const [token, setToken] = useState(null)
 
     return(
 
+
+
         <Router>
-            <UserContext.Provider value={{ token, setToken }}>
+            <UserContext.Provider value={{ token, setToken, plano, setPlano }}>
 
 
                 <GlobalStyle />
