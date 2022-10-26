@@ -66,8 +66,13 @@ function Login() {
 
         const promessa = axios.post(Api, user);
         promessa.then((props) => {
+            console.log(props.data)
             setToken(props.data.token);
-            navegar("/subscriptions")
+            if(props.data.membership === null){
+                navegar("/subscriptions")
+            } else{
+                navegar("/home")
+            }
         })
         promessa.catch((props) => {
             alert(props.response.data.message);
