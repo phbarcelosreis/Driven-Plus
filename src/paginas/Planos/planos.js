@@ -57,8 +57,10 @@ function Planos() {
     const [plans, setPlans] = useState([]);
     const navegar = useNavigate();
 
+    const dadosUserSTR = localStorage.getItem("user");
+    const dadosUserOBJ = JSON.parse(dadosUserSTR)
+    console.log(dadosUserSTR)
 
-    const { token } = useContext(UserContext);
 
     useEffect(() => {
 
@@ -66,7 +68,7 @@ function Planos() {
 
         const autorizacao = {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${dadosUserOBJ.token}`
             }
         }
 

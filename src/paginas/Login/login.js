@@ -66,6 +66,7 @@ function Login() {
 
         const promessa = axios.post(Api, user);
         promessa.then((props) => {
+            localStorage.setItem("user", JSON.stringify(props.data))
             console.log(props.data)
             setToken(props.data.token);
             if(props.data.membership === null){

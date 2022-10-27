@@ -142,14 +142,16 @@ function PlanoSelecionado() {
     const [brindes, setBrindes] = useState([])
 
     const params = useParams();
-    const { token, plano, setPlano } = useContext(UserContext)
+    const { plano, setPlano } = useContext(UserContext);
     const navegar = useNavigate();
+    const dadosUserSTR = localStorage.getItem("user");
+    const dadosUserOBJ = JSON.parse(dadosUserSTR)
 
     useEffect(() => {
 
         const autorizacao = {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${dadosUserOBJ.token}`
             }
         }
         const Api = `https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${params.id}`;
