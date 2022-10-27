@@ -40,7 +40,8 @@ const Button = styled.a`
 
 function TelaInicial(){
 
-    const {plano} = useContext(UserContext)
+    const { plano } = useContext(UserContext);
+
 
     console.log(plano.perks[0])
 
