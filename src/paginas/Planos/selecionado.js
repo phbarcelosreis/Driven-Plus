@@ -211,7 +211,7 @@ function PlanoSelecionado() {
 
     const [nomeCartao, setNomeCartao] = useState("");
     const [numeroCartao, setNumeroCartao] = useState("");
-    const [codigoCard, setCodigoCard] = useState("");
+    const [codigoCard, setCodigoCard] = useState();
     const [validade, setValidade] = useState("");
     const [clicado, setClicado] = useState(false);
 
@@ -325,10 +325,7 @@ function PlanoSelecionado() {
                     </Buttons>
                 </CardConfirmacao>
             </>
-
-
         )
-
 
     }
 
@@ -341,10 +338,10 @@ function PlanoSelecionado() {
                     setClicado(true)
                 }}>
                     <input onChange={(e) => setNomeCartao(e.target.value)} placeholder="Nome impresso no cartão" required></input>
-                    <input onChange={(e) => setNumeroCartao(e.target.value)} placeholder="Dígitos do cartão" required></input>
+                    <input onChange={(e) => setNumeroCartao(e.target.value)} placeholder="Dígitos do cartão" pattern="[0-9]{4}[ ][0-9]{4}[ ][0-9]{4}[ ][0-9]{4}" title="Você precisa digitar o número no formato: xxxx xxxx xxxx xxxx" required></input>
                     <Validade>
-                        <input onChange={(e) => setCodigoCard(e.target.value)} placeholder="Código de Segurança" type="text" required></input>
-                        <input onChange={(e) => setValidade(e.target.value)} placeholder="Validade" required></input>
+                        <input onChange={(e) => setCodigoCard(e.target.value)} placeholder="Código de Segurança" pattern="\d{3}" type="text" required></input>
+                        <input onChange={(e) => setValidade(e.target.value)} placeholder="Validade" pattern="\d{2}\/\d{2}" required></input>
                     </Validade>
                     <Button type="submit"><p>ENTRAR</p></Button>
                 </Form>
