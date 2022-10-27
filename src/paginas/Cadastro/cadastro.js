@@ -45,6 +45,14 @@ const Button = styled.button`
     border: none;
     margin-bottom: 20px;
     cursor: pointer;
+    & p{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #FFFFFF;
+    }
 `
 
 

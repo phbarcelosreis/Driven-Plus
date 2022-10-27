@@ -209,19 +209,19 @@ const Buttons = styled.div`
 
 function PlanoSelecionado() {
 
-    const [nomeCartao, setNomeCartao] = useState("")
-    const [numeroCartao, setNumeroCartao] = useState("")
-    const [codigoCard, setCodigoCard] = useState("")
-    const [validade, setValidade] = useState("")
-    const [clicado, setClicado] = useState(false)
+    const [nomeCartao, setNomeCartao] = useState("");
+    const [numeroCartao, setNumeroCartao] = useState("");
+    const [codigoCard, setCodigoCard] = useState("");
+    const [validade, setValidade] = useState("");
+    const [clicado, setClicado] = useState(false);
 
-    const [brindes, setBrindes] = useState([])
+    const [brindes, setBrindes] = useState([]);
 
     const params = useParams();
     const { plano, setPlano } = useContext(UserContext);
     const navegar = useNavigate();
     const dadosUserSTR = localStorage.getItem("user");
-    const dadosUserOBJ = JSON.parse(dadosUserSTR)
+    const dadosUserOBJ = JSON.parse(dadosUserSTR);
 
     useEffect(() => {
 
@@ -234,8 +234,9 @@ function PlanoSelecionado() {
 
         const promessa = axios.get(Api, autorizacao);
         promessa.then((props) => {
+            console.log(props.data);
             setPlano(props.data);
-            setBrindes(props.data.perks)
+            setBrindes(props.data.perks);
         });
 
         promessa.catch((props) => {
@@ -265,7 +266,7 @@ function PlanoSelecionado() {
                     </Benefícios>
                     {brindes.map((props, i) => (
 
-                        <Brindes>
+                        <Brindes key={i}>
                             <h1>{`${i + 1}.` + props.title}</h1>
                         </Brindes>
 
@@ -282,61 +283,76 @@ function PlanoSelecionado() {
         )
     }
 
-    function Cadastrar() {
+    function CadastrarCartao() {
 
-        navegar("/home")
+        const Api = "https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions"
 
-    }
-
-
-
-    function Teste(){
-
-        if (plano !== undefined) {
-
-            return (
-    
-                <>
-                    <Page>
-    
-                        <Cards />
-                        <Form onSubmit={(() => setClicado(true))}>
-                            <input onChange={((e) => setNomeCartao(e.target.value))} placeholder="Nome impresso no cartão"></input>
-                            <input onChange={((e) => setNumeroCartao(e.target.value))} placeholder="Dígitos do cartão"></input>
-                            <Validade>
-                                <input onChange={((e) => setCodigoCard(e.target.value))} placeholder="Código de Segurança" type="text" ></input>
-                                <input onChange={((e) => setValidade(e.target.value))} placeholder="Validade"></input>
-                            </Validade>
-                            <Button type="submit"><p>ENTRAR</p></Button>
-                        </Form>
-    
-                    </Page>
-    
-    
-    
-                </>
-    
-            )
+        const cartao = {
+            membershipId: plano.id,
+            cardName: nomeCartao,
+            cardNumber: numeroCartao,
+            securityNumber: codigoCard,
+            expirationDate: validade
         }
 
+        const autorizacao = {
+            headers: {
+                Authorization: `Bearer ${dadosUserOBJ.token}`
+            }
+        }
+
+        const promessa = axios.post(Api, cartao, autorizacao);
+        promessa.then(() => navegar("/home"))
+        promessa.catch((e) => alert('Error: ' + e.response.data.message));
+    }
+
+    function Cadastrar(props) {
+        props.preventDefault();
+        CadastrarCartao()
+    }
+
+    function Teste() {
+
+        return (
+
+            <>
+                <Confirmacao clicado={clicado} />
+                <CardConfirmacao clicado={clicado}>
+                    <h1>Tem certeza que deseja assinar o plano Driven Plus(R$ {plano.price})?</h1>
+                    <Buttons>
+                        <button onClick={(() => setClicado(false))}><h1>Não</h1></button>
+                        <button onClick={Cadastrar}><h1>SIM</h1></button>
+                    </Buttons>
+                </CardConfirmacao>
+            </>
+
+
+        )
+
 
     }
 
-    return (
-        <>
-            <Teste></Teste>
-            <Confirmacao clicado={clicado} />
-            <CardConfirmacao clicado={clicado}>
-                <h1>Tem certeza que deseja assinar o plano Driven Plus(R$ {plano.price})?</h1>
-                <Buttons>
-                    <button onClick={(() => setClicado(false))}><h1>Não</h1></button>
-                    <button onClick={Cadastrar}><h1>SIM</h1></button>
-                </Buttons>
-            </CardConfirmacao>
+    if (plano !== null) {
+        return (
+            <Page>
+                <Cards />
+                <Form onSubmit={(e) => {
+                    e.preventDefault();
+                    setClicado(true)
+                }}>
+                    <input onChange={(e) => setNomeCartao(e.target.value)} placeholder="Nome impresso no cartão" required></input>
+                    <input onChange={(e) => setNumeroCartao(e.target.value)} placeholder="Dígitos do cartão" required></input>
+                    <Validade>
+                        <input onChange={(e) => setCodigoCard(e.target.value)} placeholder="Código de Segurança" type="text" required></input>
+                        <input onChange={(e) => setValidade(e.target.value)} placeholder="Validade" required></input>
+                    </Validade>
+                    <Button type="submit"><p>ENTRAR</p></Button>
+                </Form>
+                <Teste />
+            </Page>
+        )
+    }
 
-        </>
-
-    )
 
 }
 

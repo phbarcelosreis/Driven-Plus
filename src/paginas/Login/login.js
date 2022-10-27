@@ -46,6 +46,14 @@ const Button = styled.button`
     border: none;
     margin-bottom: 20px;
     cursor: pointer;
+    & p{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #FFFFFF;
+    }
 `
 
 function Login() {
@@ -67,7 +75,6 @@ function Login() {
         const promessa = axios.post(Api, user);
         promessa.then((props) => {
             localStorage.setItem("user", JSON.stringify(props.data))
-            console.log(props.data)
             setToken(props.data.token);
             if(props.data.membership === null){
                 navegar("/subscriptions")
@@ -84,7 +91,6 @@ function Login() {
     function LogIn(props) {
         props.preventDefault();
         CheckLogIn();
-        console.log("oi")
     }
 
 

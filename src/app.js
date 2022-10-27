@@ -7,8 +7,8 @@ export const UserContext = createContext({});
 
 function App(){
 
-    const [plano, setPlano] = useState([])
-    const [token, setToken] = useState(null)
+    const [plano, setPlano] = useState([]);
+    const [token, setToken] = useState(null);
 
     return(
 
