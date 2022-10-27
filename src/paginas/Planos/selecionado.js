@@ -132,12 +132,88 @@ const Button = styled.button`
     cursor: pointer;
 `
 
+const Confirmacao = styled.div`
+    display: ${props => props.clicado === false ? "none" : "flex"};
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+    position: absolute;
+    width: 375px;
+    height: 667px;
+    z-index: 2;
+    opacity: 0.5;
+    background-color: black;
+    & p{
+        color: #FFFF;
+    }
+`
+
+const CardConfirmacao = styled.div`
+    display: ${props => props.clicado === false ? "none" : "flex"};
+    position: absolute;
+    width: 248px;
+    height: 210px;
+    left: 55px;
+    top: 229px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    z-index: 3;
+    flex-direction: column;
+    align-items: center;
+
+    & > h1{
+        width:204px;
+        height: 67px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #000000;
+        margin-top: 33px;
+    }
+`
+
+const Buttons = styled.div`
+    margin-left: 10px;
+    margin-top: 47px;
+    & button:nth-child(1){
+        width: 95px;
+        height: 52px;
+        background: #CECECE;
+        border-radius: 8px;
+        margin-right: 14px;
+        border: none;
+        cursor: pointer;
+    } & button:nth-child(2){
+        width: 95px;
+        height: 52px;
+        background: #FF4791;
+        border-radius: 8px;
+        margin-right: 14px;
+        border: none;
+        cursor: pointer;
+    } & h1{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        color: #FFFFFF;
+
+    }
+
+`
+
+
 function PlanoSelecionado() {
 
     const [nomeCartao, setNomeCartao] = useState("")
     const [numeroCartao, setNumeroCartao] = useState("")
     const [codigoCard, setCodigoCard] = useState("")
     const [validade, setValidade] = useState("")
+    const [clicado, setClicado] = useState(false)
 
     const [brindes, setBrindes] = useState([])
 
@@ -212,33 +288,55 @@ function PlanoSelecionado() {
 
     }
 
-    function Cadastro() {
-        navegar("/home")
+
+
+    function Teste(){
+
+        if (plano !== undefined) {
+
+            return (
+    
+                <>
+                    <Page>
+    
+                        <Cards />
+                        <Form onSubmit={(() => setClicado(true))}>
+                            <input onChange={((e) => setNomeCartao(e.target.value))} placeholder="Nome impresso no cartão"></input>
+                            <input onChange={((e) => setNumeroCartao(e.target.value))} placeholder="Dígitos do cartão"></input>
+                            <Validade>
+                                <input onChange={((e) => setCodigoCard(e.target.value))} placeholder="Código de Segurança" type="text" ></input>
+                                <input onChange={((e) => setValidade(e.target.value))} placeholder="Validade"></input>
+                            </Validade>
+                            <Button type="submit"><p>ENTRAR</p></Button>
+                        </Form>
+    
+                    </Page>
+    
+    
+    
+                </>
+    
+            )
+        }
+
+
     }
 
+    return (
+        <>
+            <Teste></Teste>
+            <Confirmacao clicado={clicado} />
+            <CardConfirmacao clicado={clicado}>
+                <h1>Tem certeza que deseja assinar o plano Driven Plus(R$ {plano.price})?</h1>
+                <Buttons>
+                    <button onClick={(() => setClicado(false))}><h1>Não</h1></button>
+                    <button><h1>SIM</h1></button>
+                </Buttons>
+            </CardConfirmacao>
 
+        </>
 
-    if (plano !== undefined) {
-        console.log(plano)
-        console.log(brindes)
-        return (
-
-            <Page>
-                <Cards />
-                <Form onSubmit={Cadastro}>
-                    <input onChange={((e) => setNomeCartao(e.target.value))} placeholder="Nome impresso no cartão"></input>
-                    <input onChange={((e) => setNumeroCartao(e.target.value))} placeholder="Dígitos do cartão"></input>
-                    <Validade>
-                        <input onChange={((e) => setCodigoCard(e.target.value))} placeholder="Código de Segurança" type="text" ></input>
-                        <input onChange={((e) => setValidade(e.target.value))} placeholder="Validade"></input>
-                    </Validade>
-                    <Button type="submit"><p>ENTRAR</p></Button>
-                </Form>
-
-            </Page>
-
-        )
-    }
+    )
 
 }
 
