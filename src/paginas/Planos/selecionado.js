@@ -234,7 +234,11 @@ function PlanoSelecionado() {
 
         const promessa = axios.get(Api, autorizacao);
         promessa.then((props) => {
-            console.log(props.data);
+            localStorage.setItem("plano", JSON.stringify(props.data));
+            const user = localStorage.getItem("user");
+            const userOBJ = JSON.parse(user);
+            userOBJ.membership = props.data;
+            localStorage.setItem("user", JSON.stringify(userOBJ));
             setPlano(props.data);
             setBrindes(props.data.perks);
         });
@@ -302,7 +306,10 @@ function PlanoSelecionado() {
         }
 
         const promessa = axios.post(Api, cartao, autorizacao);
-        promessa.then(() => navegar("/home"))
+        promessa.then(() => {
+            navegar("/home")
+        }
+        )
         promessa.catch((e) => alert('Error: ' + e.response.data.message));
     }
 

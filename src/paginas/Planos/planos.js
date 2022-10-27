@@ -58,8 +58,7 @@ function Planos() {
     const navegar = useNavigate();
 
     const dadosUserSTR = localStorage.getItem("user");
-    const dadosUserOBJ = JSON.parse(dadosUserSTR)
-    console.log(dadosUserSTR)
+    const dadosUserOBJ = JSON.parse(dadosUserSTR);
 
 
     useEffect(() => {
