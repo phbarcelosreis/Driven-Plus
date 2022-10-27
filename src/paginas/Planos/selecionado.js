@@ -282,9 +282,9 @@ function PlanoSelecionado() {
         )
     }
 
-    function CadastroCartao() {
+    function Cadastrar() {
 
-
+        navegar("/home")
 
     }
 
@@ -330,7 +330,7 @@ function PlanoSelecionado() {
                 <h1>Tem certeza que deseja assinar o plano Driven Plus(R$ {plano.price})?</h1>
                 <Buttons>
                     <button onClick={(() => setClicado(false))}><h1>Não</h1></button>
-                    <button><h1>SIM</h1></button>
+                    <button onClick={Cadastrar}><h1>SIM</h1></button>
                 </Buttons>
             </CardConfirmacao>
 
